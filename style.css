@@ -190,7 +190,7 @@ a {
 }
 .shopping-cart .items-detail h3 {
   font-size: 1.6rem;
-  padding-bottom: 0.5rem;  
+  padding-bottom: 0.5rem;
 }
 .shopping-cart .items-price {
   font-size: 1.2rem;
@@ -214,8 +214,13 @@ a {
   background-size: cover;
   background-position: center;
   position: relative;
+  mask-image: linear-gradient(
+   to bottom, 
+      rgba(13, 17, 20, 1) 90%, 
+      rgba(13, 17, 20, 0) 
+  );
 }
-.hero::after {
+/* .hero::after {
   content: "";
   display: block;
   position: absolute;
@@ -225,19 +230,31 @@ a {
   background: linear-gradient(
     to bottom,
     rgba(13, 17, 20, 1) 0%,
-    /* Hitam pekat di area navbar */ rgba(13, 17, 20, 0.75) 25%,
-    /* Mulai transparan perlahan */ rgba(13, 17, 20, 0.2) 60%,
-    /* Sangat transparan di tengah (area mobil) */ rgba(13, 17, 20, 1) 100%
-      /* Hitam pekat sempurna di dasar halaman */
+     rgba(13, 17, 20, 0.75) 25%,
+     rgba(13, 17, 20, 0.2) 60%,
+    rgba(13, 17, 20, 1) 100%
   );
   z-index: 1;
   pointer-events: none;
+} */
+
+.hero .mask-container {
+  position: absolute;
+  inset: 0;
+  mask-image: url(img/hero-section.svg);
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  mask-position: center;
 }
 .hero .content {
   position: relative;
   z-index: 2; /* Naik ke level 2 (di atas ::after) sehingga bisa diklik */
-  max-width: 650px;
+  /* max-width: 650px; */
   padding: 0 2rem;
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  top: 100px;
 }
 .hero .content h1 {
   font-size: 5em;
@@ -288,6 +305,10 @@ a {
   box-sizing: border-box;
   box-shadow: var(--neon-glow);
   border-radius: var(--border-radius-md);
+  mask-image: url(img/car2.svg);
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: left;
 }
 .about .row .content {
   flex: 1 1 35rem;
@@ -359,7 +380,8 @@ a {
 
 /* gallery */
 /* Styling Section Our Gallery */
-.gallery-section, .products {
+.gallery-section,
+.products {
   padding: 10rem 7% 1.4rem;
   background-color: #121212; /* Sesuaikan dengan background gelap website */
   color: #ffffff;
@@ -369,7 +391,6 @@ a {
 .products h2 {
   margin-bottom: 40px;
   text-align: center;
-
 }
 
 .section-title,
@@ -472,7 +493,7 @@ a {
   justify-content: center;
   gap: 0.5rem;
 }
-.products .products-cart .product-icon a{
+.products .products-cart .product-icon a {
   width: 4rem;
   height: 4rem;
   color: white;
@@ -504,7 +525,6 @@ a {
 .modal .product-stars {
   font-size: 1.7rem;
   padding: 0.8rem;
- 
 }
 .products .product-stars .fa,
 .modal .product-stars .fa {
@@ -641,12 +661,10 @@ footer .credit a {
   animation: animateModal 0.7s;
 }
 
-
 .modal-container .fa-close {
   position: absolute;
   right: 1rem;
   font-size: 3rem;
-
 }
 .modal-content {
   display: flex;
