@@ -185,7 +185,8 @@ a {
 }
 .shopping-cart img {
   height: 6rem;
-  border-radius: 50%;
+  width: 6rem;
+  border-radius: 75%;
 }
 .shopping-cart .items-detail h3 {
   font-size: 1.6rem;
@@ -782,5 +783,9 @@ footer .credit a {
   }
   .catalogue .catalogue-cart {
     width: 1000%;
+  }
+  .modal-content img {
+    margin-top: 3rem;
+    width: 98%;
   }
 }
