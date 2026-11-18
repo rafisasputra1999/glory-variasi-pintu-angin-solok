@@ -3,8 +3,9 @@
 const navbarNav = document.querySelector(".navbar-nav");
 
 // ketika di klik
-document.querySelector("#hamburger").onclick = () => {
+document.querySelector("#hamburger").onclick = (e) => {
   navbarNav.classList.toggle("active");
+  e.preventDefault();
 };
 
 
@@ -58,7 +59,7 @@ itemDetailButtons.forEach((btn) => {
 
 
 // klik tombol close modal
-document.querySelector('.modal .fa-close').onclick = (e) => {
+document.querySelector('.modal .close-btn').onclick = (e) => {
   itemDetailModal.style.display = 'none';
   e.preventDefault()
 }

@@ -636,6 +636,7 @@ footer .credit a {
   padding: 1.2rem;
   border: 1px solid var(--accent);
   width: 80%;
+  height: fit-content;
   animation: animateModal 0.7s;
 }
 
@@ -643,6 +644,7 @@ footer .credit a {
 .modal-container .fa-close {
   position: absolute;
   right: 1rem;
+  font-size: 3rem;
 
 }
 .modal-content {
