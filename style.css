@@ -558,20 +558,21 @@ a {
 }
 .products .products-cart .product-icon {
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: center; /* tengah horizontal */
+  align-items: center;
+  gap: 1.5rem;             /* jarak antar ikon */
 }
 .products .products-cart .product-icon a {
   width: 4rem;
   height: 4rem;
   color: white;
-  margin: 1rem;
+  margin: 0;               /* hapus margin lama */
   border: 1px solid var(--text-primary);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
+  /* transform dihapus */
 }
 .products .products-cart .product-icon a:hover {
   background-color: var(--accent);
