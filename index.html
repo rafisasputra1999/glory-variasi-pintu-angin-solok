@@ -15,10 +15,17 @@
     <link rel="stylesheet" href="fontawesome/css/all.min.css" />
     <!-- css -->
     <link rel="stylesheet" href="style.css" />
+    <!-- app -->
+    <script src="src/app.js"></script>
+    <!-- alpine js library -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
   </head>
   <body>
     <!-- navbar start -->
-    <nav class="navbar">
+    <nav class="navbar" x-data>
       <a href="#" class="navbar-logo">GLORY<span>_VARIASI</span></a>
       <div class="navbar-nav">
         <a href="#">HOME</a>
@@ -32,7 +39,13 @@
         <a href="#" id="search-button"><i class="fa fa-search"></i></a>
         <a href="#" id="shopping-cart-button"
           ><i class="fa fa-shopping-bag"></i
-        ></a>
+          ><span
+            class="quantity-badge"
+            x-show="$store.cart.quantity"
+            x-text="$store.cart.quantity"
+            >10</span
+          ></a
+        >
         <a href="#" id="hamburger"><i class="fa fa-bars"></i></a>
       </div>
       <!-- search form start -->
@@ -43,29 +56,55 @@
       <!-- search form end -->
       <!-- shopping cart start -->
       <div class="shopping-cart">
-        <div class="cart-items">
-          <img src="img/kaca film.jpg" alt="produk 1" />
-          <div class="items-detail">
-            <h3>Kaca Film</h3>
-            <div class="items-price">IDR 1.000.000</div>
+        <template x-for="(item, index) in $store.cart.items" x-key="index">
+          <div class="cart-items">
+            <img :src="`img/products/${item.img}`" :alt="item.name" />
+            <div class="items-detail">
+              <h3 x-text="item.name">Kaca Film</h3>
+              <div class="items-price">
+                <span x-text="rupiah(item.price)">RP. 30.000</span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">
+                  &minus;
+                </button>
+                <span x-text="item.quantity">1</span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button>
+                &equals;
+                <span x-text="rupiah(item.total)">RP. 30.000.000</span>
+              </div>
+            </div>
           </div>
-          <i class="fa fa-trash"></i>
-        </div>
-        <div class="cart-items">
-          <img src="img/kaca film.jpg" alt="produk 1" />
-          <div class="items-detail">
-            <h3>Kaca Film</h3>
-            <div class="items-price">IDR 1.000.000</div>
-          </div>
-          <i class="fa fa-trash"></i>
-        </div>
-        <div class="cart-items">
-          <img src="img/kaca film.jpg" alt="produk 1" />
-          <div class="items-detail">
-            <h3>Kaca Film</h3>
-            <div class="items-price">IDR 1.000.000</div>
-          </div>
-          <i class="fa fa-trash"></i>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">
+          Cart is Empty
+        </h4>
+        <h4 x-show="$store.cart.items.length">
+          Total: <span x-text="rupiah($store.cart.total)">1212</span>
+        </h4>
+
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkOutForm">
+            <h5>Customer Detail</h5>
+            <label for="name">
+              <span>Name</span>
+              <input type="text" name="name" id="name" />
+            </label>
+            <label for="email">
+              <span>Email</span>
+              <input type="email" name="email" id="email" />
+            </label>
+            <label for="phone">
+              <span>Phone</span>
+              <input type="number" name="phone" id="phone" autocomplete="off" />
+            </label>
+            <button
+              class="checkout-button"
+              type="submit"
+              id="checkout-button"
+              value="checkout"
+            >
+              Checkout
+            </button>
+          </form>
         </div>
       </div>
       <!-- shopping cart end -->
@@ -257,105 +296,45 @@
     <!-- our gallery start -->
 
     <!-- product section start-->
-    <section class="products" id="products">
+    <section class="products" id="products" x-data="products">
       <h2>our <span>products</span></h2>
       <p>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat dicta
         quam quibusdam distinctio. Nobis, officiis.
       </p>
       <div class="row">
-        <div class="products-cart">
-          <div class="product-icon">
-            <a href="#"><i class="fa fa-shopping-cart"></i></a>
-            <a href="#" class="item-detail-button"><i class="fa fa-eye"></i></a>
-          </div>
-          <div class="product-img">
-            <img src="img/kaca film.jpg" alt="product 1" />
-          </div>
-          <div class="product-content">
-            <h3>kaca film jasjos</h3>
-            <div class="product-stars">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="products-cart">
+            <div class="product-icon">
+              <a href="#" @click.prevent="$store.cart.add(item)">
+                <i class="fa fa-shopping-cart"></i>
+              </a>
+              <a
+                href="#"
+                class="item-detail-button"
+                @click.prevent.stop="$store.modal.open(item)"
+              >
+                <i class="fa fa-eye"></i>
+              </a>
             </div>
-            <div class="product-price">
-              IDR 1.000.000
-              <span>IDR 2.000.000</span>
+            <div class="product-img">
+              <img :src="`img/products/${item.img}`" alt="product 1" />
             </div>
-          </div>
-        </div>
-        <div class="products-cart">
-          <div class="product-icon">
-            <a href="#"><i class="fa fa-shopping-cart"></i></a>
-            <a href="#" class="item-detail-button"><i class="fa fa-eye"></i></a>
-          </div>
-          <div class="product-img">
-            <img src="img/kaca film.jpg" alt="product 1" />
-          </div>
-          <div class="product-content">
-            <h3>kaca film jasjos</h3>
-            <div class="product-stars">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-            </div>
-            <div class="product-price">
-              IDR 1.000.000
-              <span>IDR 2.000.000</span>
+            <div class="product-content">
+              <h3 x-text="item.name">kaca film jasjos</h3>
+              <div class="product-stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+              </div>
+              <div class="product-price">
+                <span x-text="rupiah(item.price)"></span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="products-cart">
-          <div class="product-icon">
-            <a href="#"><i class="fa fa-shopping-cart"></i></a>
-            <a href="#" class="item-detail-button"><i class="fa fa-eye"></i></a>
-          </div>
-          <div class="product-img">
-            <img src="img/kaca film.jpg" alt="product 1" />
-          </div>
-          <div class="product-content">
-            <h3>kaca film jasjos</h3>
-            <div class="product-stars">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-            </div>
-            <div class="product-price">
-              IDR 1.000.000
-              <span>IDR 2.000.000</span>
-            </div>
-          </div>
-        </div>
-        <div class="products-cart">
-          <div class="product-icon">
-            <a href="#"><i class="fa fa-shopping-cart"></i></a>
-            <a href="#" class="item-detail-button"><i class="fa fa-eye"></i></a>
-          </div>
-          <div class="product-img">
-            <img src="img/kaca film.jpg" alt="product 1" />
-          </div>
-          <div class="product-content">
-            <h3>kaca film jasjos</h3>
-            <div class="product-stars">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-            </div>
-            <div class="product-price">
-              IDR 1.000.000
-              <span>IDR 2.000.000</span>
-            </div>
-          </div>
-        </div>
+        </template>
       </div>
     </section>
     <!-- product section end-->
@@ -413,37 +392,67 @@
       </div>
     </footer>
     <!-- footer end -->
-    <!-- modal box detail start -->
-    <div class="modal" id="item-detail-modal">
-      <div class="modal-container">
-        <a href="" class="close-btn"><i class="fa fa-close"></i></a>
-        <div class="modal-content">
-          <img src="img/kaca film.jpg" alt="produk 1" />
-          <div class="product-content">
-            <h3>produk 1</h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem,
-              cum aut iure consequuntur eius dignissimos?
-            </p>
-            <div class="product-stars">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-            </div>
-            <div class="product-price">
-              IDR 1.000.000
-              <span>IDR 2.000.000</span>
-            </div>
-            <a href="#"
-              ><i class="fa fa-shopping-cart"></i><span>add to cart</span></a
-            >
-          </div>
+    <!-- bottom sheet detail start -->
+    <div
+      x-data="{ startY: 0 }"
+      x-effect="document.body.style.overflow = $store.modal.item ? 'hidden' : ''"
+      @keydown.escape.window="$store.modal.close()"
+    >
+      <!-- backdrop -->
+      <div
+        class="sheet-backdrop"
+        x-show="$store.modal.item !== null"
+        x-transition.opacity
+        x-cloak
+        @click="$store.modal.close()"
+      ></div>
+
+      <!-- sheet -->
+      <div
+        class="sheet"
+        x-show="$store.modal.item !== null"
+        x-cloak
+        x-transition:enter="sheet-anim"
+        x-transition:enter-start="sheet-hidden"
+        x-transition:enter-end="sheet-shown"
+        x-transition:leave="sheet-anim"
+        x-transition:leave-start="sheet-shown"
+        x-transition:leave-end="sheet-hidden"
+      >
+        <!-- handle: tap atau geser ke bawah untuk menutup -->
+        <div
+          class="sheet-handle"
+          @click="$store.modal.close()"
+          @touchstart.passive="startY = $event.touches[0].clientY"
+          @touchend="if ($event.changedTouches[0].clientY - startY > 60) $store.modal.close()"
+        >
+          <span></span>
         </div>
+
+        <template x-if="$store.modal.item">
+          <div class="sheet-body">
+            <img
+              :src="`img/products/${$store.modal.item.img}`"
+              :alt="$store.modal.item.name"
+            />
+            <div class="sheet-info">
+              <h3 x-text="$store.modal.item.name"></h3>
+              <div
+                class="sheet-price"
+                x-text="rupiah($store.modal.item.price)"
+              ></div>
+              <button
+                class="sheet-add"
+                @click="$store.cart.add($store.modal.item); $store.modal.close()"
+              >
+                <i class="fa fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        </template>
       </div>
     </div>
-    <!-- modal box detail end -->
+    <!-- bottom sheet detail end -->
     <script src="script.js"></script>
   </body>
 </html>

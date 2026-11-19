@@ -46,27 +46,27 @@ document.addEventListener("click", function (e) {
 
 // modal box
 
-const itemDetailModal = document.querySelector('#item-detail-modal');
-const itemDetailButtons = document.querySelectorAll('.item-detail-button');
+// const itemDetailModal = document.querySelector('#item-detail-modal');
+// const itemDetailButtons = document.querySelectorAll('.item-detail-button');
 
-itemDetailButtons.forEach((btn) => {
+// itemDetailButtons.forEach((btn) => {
   
-  btn.onclick = (e) => {
-    itemDetailModal.style.display = 'flex';
-    e.preventDefault();
-  };
-})
+//   btn.onclick = (e) => {
+//     itemDetailModal.style.display = 'flex';
+//     e.preventDefault();
+//   };
+// })
 
 
-// klik tombol close modal
-document.querySelector('.modal .close-btn').onclick = (e) => {
-  itemDetailModal.style.display = 'none';
-  e.preventDefault()
-}
-// klik diluar modal box
-window.onclick = (e) => {
-  if (e.target === itemDetailModal) {
-    itemDetailModal.style.display = 'none';
-  };
-};
+// // klik tombol close modal
+// document.querySelector('.modal .close-btn').onclick = (e) => {
+//   itemDetailModal.style.display = 'none';
+//   e.preventDefault()
+// }
+// // klik diluar modal box
+// window.onclick = (e) => {
+//   if (e.target === itemDetailModal) {
+//     itemDetailModal.style.display = 'none';
+//   };
+// };
 
