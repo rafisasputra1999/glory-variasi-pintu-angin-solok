@@ -803,7 +803,7 @@ footer .credit a {
     font-size: 62.5%;
   }
   .hero {
-    background-image: url(img/tablet\ hero.jpg);
+    background-image: url(img/tablet.jpg);
   }
   #hamburger {
     display: inline-block;
@@ -889,7 +889,7 @@ footer .credit a {
     font-size: 55%;
   }
   .hero {
-    background-image: url(img/hero\ mobile.jpg);
+    background-image: url(img/mobile.jpg);
   }
   .catalogue .catalogue-cart {
     width: 1000%;
