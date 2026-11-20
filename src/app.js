@@ -75,8 +75,48 @@ document.addEventListener("alpine:init", () => {
         this.total -= cartItem.price;
       }
     },
-    
   });
+  Alpine.data("checkoutForm", () => ({
+    name: "",
+    email: "",
+    phone: "",
+
+    get valid() {
+      const phoneDigits = this.phone.replace(/\D/g, "");
+      return (
+        this.name.trim().length > 1 &&
+        /^\S+@\S+\.\S+$/.test(this.email.trim()) &&
+        phoneDigits.length >= 9 &&
+        phoneDigits.length <= 15
+      );
+    },
+
+    submit() {
+      if (!this.valid) return;
+
+      const cart = Alpine.store("cart");
+      const lines = cart.items.map(
+        (i) => `• ${i.name} x${i.quantity} = ${rupiah(i.total)}`,
+      );
+
+      const message =
+        `Halo Glory Variasi, saya ingin pesan:\n\n` +
+        `${lines.join("\n")}\n\n` +
+        `Total: ${rupiah(cart.total)}\n\n` +
+        `Nama: ${this.name.trim()}\n` +
+        `Email: ${this.email.trim()}\n` +
+        `Telepon: ${this.phone.trim()}`;
+
+      const nomorToko = "6282268752459"; // ganti dengan nomor WA toko
+      const url = `https://wa.me/${nomorToko}?text=${encodeURIComponent(message)}`;
+
+      window.location.href = url;
+      cart.items = [];
+      cart.total = 0;
+      cart.quantity = 0;
+      this.name = this.email = this.phone = "";
+    },
+  }));
 });
 
 // konversi rupiah
@@ -87,3 +127,4 @@ const rupiah = (number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
+// form validasi

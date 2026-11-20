@@ -16,7 +16,7 @@
     <!-- css -->
     <link rel="stylesheet" href="style.css" />
     <!-- app -->
-    <script src="src/app.js"></script>
+    <script src="src/app.js" defer></script>
     <!-- alpine js library -->
     <script
       defer
@@ -82,25 +82,48 @@
         </h4>
 
         <div class="form-container" x-show="$store.cart.items.length">
-          <form action="" id="checkOutForm">
+          <form
+            id="checkoutForm"
+            x-data="checkoutForm"
+            @submit.prevent="submit()"
+          >
             <h5>Customer Detail</h5>
             <label for="name">
               <span>Name</span>
-              <input type="text" name="name" id="name" />
+              <input
+                type="text"
+                name="name"
+                id="name"
+                x-model="name"
+                required
+              />
             </label>
             <label for="email">
               <span>Email</span>
-              <input type="email" name="email" id="email" />
+              <input
+                type="email"
+                name="email"
+                id="email"
+                x-model="email"
+                required
+              />
             </label>
             <label for="phone">
               <span>Phone</span>
-              <input type="number" name="phone" id="phone" autocomplete="off" />
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                x-model="phone"
+                autocomplete="off"
+                required
+              />
             </label>
             <button
               class="checkout-button"
               type="submit"
               id="checkout-button"
-              value="checkout"
+              :disabled="!valid"
             >
               Checkout
             </button>
@@ -181,11 +204,7 @@
           <p class="catalogue-cart-price">IDR 8000K</p>
         </div>
         <div class="catalogue-cart">
-          <img
-            src="img/interior.jpg"
-            alt=""
-            class="catalogue-cart-img"
-          />
+          <img src="img/interior.jpg" alt="" class="catalogue-cart-img" />
           <h3 class="catalogue-cart-title">-window film-</h3>
           <p class="catalogue-cart-price">IDR 8000K</p>
         </div>
