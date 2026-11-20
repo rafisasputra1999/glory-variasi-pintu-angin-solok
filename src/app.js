@@ -75,6 +75,7 @@ document.addEventListener("alpine:init", () => {
         this.total -= cartItem.price;
       }
     },
+    
   });
 });
 
